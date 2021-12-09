@@ -32,6 +32,18 @@ function App() {
     setLists(prev => [...prev, {id, name}])
     setTasks(prev => ({...prev, [id]: []}))
   }
+  const editList = (newName: string, id: number): void => {
+    if (!newName) return
+    setLists(prev => {
+      const listIdx = prev.findIndex(list => list.id === id)
+      const newList = [...prev]
+      newList[listIdx].name = newName 
+      return [...prev]
+    })
+  }
+  const deleteList = (id: number): void => {
+    setLists(prev => [...prev.filter(list => list.id !== id)])
+  }
 
   return (
     <div className={`App flex flex-col bg-random-image min-h-screen ${darkMode ? "dark" : ""}`}>
@@ -42,7 +54,12 @@ function App() {
       />
       <Board>
         {lists.map(list => (
-          <TaskList key={list.id} name={list.name}>
+          <TaskList 
+            key={list.id} 
+            name={list.name}
+            onEdit={(newName: string) => editList(newName, list.id)}
+            onDelete={() => deleteList(list.id)}
+          >
             {tasks[list.id].map(task => (
               <Task key={task.id} content={task.content} />
             ))}
