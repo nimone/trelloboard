@@ -26,6 +26,13 @@ function App() {
   const [tasks, setTasks] = useState<IState["tasks"]>(dummyTasks)
   const [darkMode, setDarkMode] = useState(false)
 
+  const addNewList = (name: string | null): void => {
+    if (!name) return
+    const id = Date.now()
+    setLists(prev => [...prev, {id, name}])
+    setTasks(prev => ({...prev, [id]: []}))
+  }
+
   return (
     <div className={`App flex flex-col bg-random-image min-h-screen ${darkMode ? "dark" : ""}`}>
       <Header 
@@ -41,7 +48,7 @@ function App() {
             ))}
           </TaskList>
         ))}
-        <Button>
+        <Button onClick={() => addNewList(prompt("List Name?"))}>
           <Plus className="mr-1" />
           <span>Add another list</span>
         </Button>
