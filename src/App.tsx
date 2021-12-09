@@ -43,6 +43,22 @@ function App() {
   }
   const deleteList = (id: number): void => {
     setLists(prev => [...prev.filter(list => list.id !== id)])
+    setTasks(prev => {
+      const newTasks = {...prev}
+      delete newTasks[id]
+      return newTasks
+    })
+  }
+  
+  const addNewTask = (listID: number, task: string | null ): void => {
+    if (!task) return
+    setTasks(prev => ({
+      ...prev,
+      [listID]: [
+        ...prev[listID],
+        {id: Date.now(), content: task},
+      ]
+    }))
   }
 
   return (
@@ -59,6 +75,7 @@ function App() {
             name={list.name}
             onEdit={(newName: string) => editList(newName, list.id)}
             onDelete={() => deleteList(list.id)}
+            onAddTask={() => addNewTask(list.id, prompt("Task?"))}
           >
             {tasks[list.id].map(task => (
               <Task key={task.id} content={task.content} />
