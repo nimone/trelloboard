@@ -1,10 +1,12 @@
 import React, { useState } from "react"
 import { Check, Edit2, MoreHorizontal, Plus, Trash, X } from "react-feather"
+import { Droppable } from "react-beautiful-dnd";
 import Button from "./Button";
 import Dropdown, { DropdownItem } from "./Dropdown";
 import TrelloForm, { TrelloInput } from "./TrelloForm";
 
 interface IProps {
+  id: number
   name: string
   children: React.ReactNode
   onEdit: (newName: string) => void
@@ -12,7 +14,7 @@ interface IProps {
   onAddTask: () => void 
 }
 
-function TaskList({ name, children, onEdit, onDelete, onAddTask }: IProps) {
+function TaskList({ id, name, children, onEdit, onDelete, onAddTask }: IProps) {
   const [showMenu, setShowMenu] = useState(false)
   const [edit, setEdit] = useState(false)
   const [editName, setEditName] = useState(name)
@@ -74,14 +76,21 @@ function TaskList({ name, children, onEdit, onDelete, onAddTask }: IProps) {
         }
       </section>
 
-      <ul className={`
-        flex flex-col gap-1 flex-1
-        max-h-[75vh] overflow-y-auto px-1 mx-1 pb-2
-        scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent scrollbar-thumb-rounded-full
-        dark:(scrollbar-thumb-gray-600)
-      `}>
-        {children}
-      </ul>
+      <Droppable droppableId={id.toString()} key={id}>
+      {(provided) => (
+        <ul className={`
+          flex flex-col gap-1 flex-1
+          max-h-[75vh] px-1 mx-1 pb-2
+          scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent scrollbar-thumb-rounded-full
+          dark:(scrollbar-thumb-gray-600)
+        `} 
+          ref={provided.innerRef}
+        >
+          {children}
+          {provided.placeholder}
+        </ul>
+      )}
+      </Droppable>
 
       <Button 
         secondary 
