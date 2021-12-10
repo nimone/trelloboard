@@ -6,15 +6,17 @@ import Button from './components/Button'
 import Header from './components/Header'
 import Task from './components/Task'
 import TaskList from './components/TaskList'
-import { dummyLists, dummyTasks } from './dummyData'
 import trelloReducer from './trelloReducer'
+import useLocalStorage from './useLocalStorage'
 
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false)
-  const [state, dispatch] = useReducer(trelloReducer, {
-    lists: dummyLists, 
-    tasks: dummyTasks
+  const [darkMode, setDarkMode] = useState(
+    window.matchMedia('(prefers-color-scheme: dark)').matches ? true : false
+  )
+  const [state, dispatch] = useLocalStorage(trelloReducer, {
+    lists: [], 
+    tasks: {}
   })
   
   const addNewList = (name: string | null): void => {
