@@ -8,9 +8,11 @@ import Task from './components/Task'
 import TaskList from './components/TaskList'
 import trelloReducer from './trelloReducer'
 import useLocalStorage from './useLocalStorage'
+import { TrelloListForm, TrelloTaskForm } from './components/TrelloForm'
 
 
 function App() {
+  const [showAddListForm, setShowAddListForm] = useState(false)
   const [darkMode, setDarkMode] = useState(
     window.matchMedia('(prefers-color-scheme: dark)').matches ? true : false
   )
@@ -19,8 +21,8 @@ function App() {
     tasks: {}
   })
   
-  const addNewList = (name: string | null): void => {
-    if (!name) return
+  const addNewList = (name: string): void => {
+    setShowAddListForm(false)
     dispatch({type: "ADD_LIST", payload: name})
   }
   const editList = (id: number, newName: string): void => {
@@ -30,8 +32,7 @@ function App() {
   const deleteList = (id: number): void => {
     dispatch({type: "DELETE_LIST", payload: id})
   }
-  const addNewTask = (listID: number, task: string | null ): void => {
-    if (!task) return
+  const addNewTask = (listID: number, task: string): void => {
     dispatch({type: "ADD_TASK", payload: {listID, task}})
   }
 
@@ -67,7 +68,7 @@ function App() {
               name={list.name}
               onEdit={(newName: string) => editList(list.id, newName)}
               onDelete={() => deleteList(list.id)}
-              onAddTask={() => addNewTask(list.id, prompt("Task?"))}
+              onAddTask={(task) => addNewTask(list.id, task)}
             >
               {state.tasks[list.id].map((task, idx) => (
                 <Task 
@@ -79,10 +80,17 @@ function App() {
               ))}
             </TaskList>
           ))}
-          <Button onClick={() => addNewList(prompt("List Name?"))}>
-            <Plus className="mr-1" />
-            <span>Add another list</span>
-          </Button>
+          {showAddListForm 
+            ? <TrelloListForm 
+                onSubmit={addNewList} 
+                onCancel={() => setShowAddListForm(false)}
+                inputValue="" 
+              />
+            : <Button onClick={() => setShowAddListForm(true)}>
+                <Plus className="mr-1" />
+                <span>Add another list</span>
+              </Button>
+          }
         </Board>
       </DragDropContext>
     </div>

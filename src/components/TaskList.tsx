@@ -3,7 +3,7 @@ import { Check, Edit2, MoreHorizontal, Plus, Trash, X } from "react-feather"
 import { Droppable } from "react-beautiful-dnd";
 import Button from "./Button";
 import Dropdown, { DropdownItem } from "./Dropdown";
-import TrelloForm, { TrelloInput } from "./TrelloForm";
+import TrelloForm, { TrelloInput, TrelloTaskForm } from "./TrelloForm";
 
 interface IProps {
   id: number
@@ -11,11 +11,12 @@ interface IProps {
   children: React.ReactNode
   onEdit: (newName: string) => void
   onDelete: () => void
-  onAddTask: () => void 
+  onAddTask: (task: string) => void 
 }
 
 function TaskList({ id, name, children, onEdit, onDelete, onAddTask }: IProps) {
   const [showMenu, setShowMenu] = useState(false)
+  const [showAddTaskForm, setShowAddTaskForm] = useState(false)
   const [edit, setEdit] = useState(false)
   const [editName, setEditName] = useState(name)
 
@@ -35,7 +36,7 @@ function TaskList({ id, name, children, onEdit, onDelete, onAddTask }: IProps) {
   return (
     <div className={`
       flex flex-col 
-      min-w-56 max-w-72 
+      min-w-60 max-w-72 
       bg-gray-100/80 rounded 
       dark:(bg-gray-800/90)
     `}>
@@ -87,19 +88,31 @@ function TaskList({ id, name, children, onEdit, onDelete, onAddTask }: IProps) {
           ref={provided.innerRef}
         >
           {children}
+          {showAddTaskForm &&
+            <TrelloTaskForm 
+              onSubmit={(task) => {
+                onAddTask(task)
+                setShowAddTaskForm(false)
+              }} 
+              inputValue="" 
+              onCancel={() => setShowAddTaskForm(false)}
+            />
+          }
           {provided.placeholder}
         </ul>
       )}
       </Droppable>
 
-      <Button 
-        secondary 
-        className="text-sm mb-1"
-        onClick={onAddTask}
-      >
-        <Plus className="mr-1 w-5 h-5" />
-        <span>Add another card</span>
-      </Button>
+      {!showAddTaskForm &&
+        <Button 
+          secondary 
+          className="text-sm mb-1"
+          onClick={() => setShowAddTaskForm(true)}
+        >
+          <Plus className="mr-1 w-5 h-5" />
+          <span>Add another card</span>
+        </Button>
+      }
     </div>
   )
 }

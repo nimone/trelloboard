@@ -15,7 +15,7 @@ function Button({ className, children, secondary, ...props }: IProps) {
         text-white whitespace-nowrap
         focus:(outline-none)
         dark:(bg-gray-600/40)
-        ${secondary ? "!bg-transparent !text-gray-500": ""}
+        ${secondary ? "!bg-transparent !text-gray-500 px-1": ""}
         ${className}
       `}
       {...props}
