@@ -35,6 +35,9 @@ function App() {
   const addNewTask = (listID: number, task: string): void => {
     dispatch({type: "ADD_TASK", payload: {listID, task}})
   }
+  const deleteTask = (listID: number, taskID: number): void => {
+    dispatch({type: "DELETE_TASK", payload: {listID, taskID}})
+  }
 
   const handleTaskDrag = ({ destination, source }: DropResult): void => {
     if (!destination) return
@@ -76,6 +79,7 @@ function App() {
                   id={task.id} 
                   idx={idx}
                   content={task.content} 
+                  onDelete={() =>  deleteTask(list.id, task.id)}
                 /> 
               ))}
             </TaskList>

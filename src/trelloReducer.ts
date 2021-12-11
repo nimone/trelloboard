@@ -16,6 +16,7 @@ type ActionType =
   | {type: "DELETE_LIST", payload: number}
   | {type: "EDIT_LIST", payload: {newName: string, id: number}}
   | {type: "ADD_TASK", payload: {listID: number, task: string}}
+  | {type: "DELETE_TASK", payload: {listID: number, taskID: number}}
   | {type: "DRAG_TASK", payload: {
       fromListID: number, 
       toListID: number, 
@@ -57,6 +58,18 @@ export default function trelloReducer(state: IState, action: ActionType) {
         }
       }
 
+    case 'DELETE_TASK':
+      return {
+        ...state,
+        tasks: {
+          ...state.tasks,
+          [action.payload.listID]: [
+            ...state.tasks[action.payload.listID]
+              .filter(task => task.id !== action.payload.taskID)
+          ]
+        }
+      }
+      
     case 'DRAG_TASK':
       const { fromListID, toListID, fromTaskIdx, toTaskIdx } = action.payload
 

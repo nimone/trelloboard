@@ -130,7 +130,7 @@ export function TrelloTaskForm({ inputValue, onSubmit, onCancel, className }: IT
     <TrelloForm 
       onSubmit={handleSubmit}
       className={`
-        relative p-2 
+        relative p-2 group
         bg-gray-200 text-gray-800 rounded 
         dark:(bg-gray-700 text-gray-200) ${className}
       `}
@@ -146,8 +146,8 @@ export function TrelloTaskForm({ inputValue, onSubmit, onCancel, className }: IT
       {onCancel &&
         <Button 
           onClick={onCancel} 
-          secondary
-          className="absolute top-1 right-1"
+          floating
+          className="absolute hidden top-1 right-1 group-hover:block"
         >
           <X className="w-5 h-5" />
         </Button>
