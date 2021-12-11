@@ -34,8 +34,11 @@ export default function trelloReducer(state: IState, action: ActionType) {
       }
 
     case 'DELETE_LIST':
+      const newTasks = {...state.tasks}
+      delete newTasks[action.payload]
+
       return {
-        ...state, 
+        tasks: newTasks, 
         lists: state.lists.filter(list => list.id != action.payload),
       }
 

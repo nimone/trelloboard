@@ -24,7 +24,7 @@ interface ITrelloFormProps {
 function TrelloForm({ children, className, ...props }: IFormProps) {
   return (
     <form 
-      className={`w-full flex ${className}`}
+      className={`flex ${className}`}
       {...props}
     >
       {children}

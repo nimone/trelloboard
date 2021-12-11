@@ -43,7 +43,7 @@ function TaskList({ id, name, children, onEdit, onDelete, onAddTask }: IProps) {
       <section className="relative flex justify-between px-4 py-2">
         {edit 
           ? ( 
-          <TrelloForm onSubmit={handleEdit}> 
+          <TrelloForm onSubmit={handleEdit} className="w-full"> 
             <TrelloInput 
               className={titleClassName} 
               type="text" 
