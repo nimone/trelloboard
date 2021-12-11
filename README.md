@@ -1,5 +1,7 @@
-# Trello Board 📝
+# [Trello Board](https://trelloboard.pages.dev/) 📌
 A Trelloboard to help manage and visualize your project workload & progress with a simple & pretty interface (basically a trello clone).
+
+**Demo: **[https://trelloboard.pages.dev/](https://trelloboard.pages.dev/)
 
 **Screenshot (light):**
 ![Light theme](https://i.ibb.co/Scq0dDb/Screenshot-from-2021-12-11-12-33-58.png)

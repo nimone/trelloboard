@@ -9,6 +9,7 @@ import TaskList from './components/TaskList'
 import trelloReducer from './trelloReducer'
 import useLocalStorage from './useLocalStorage'
 import { TrelloListForm, TrelloTaskForm } from './components/TrelloForm'
+import Footer from './components/Footer'
 
 
 function App() {
@@ -97,6 +98,7 @@ function App() {
           }
         </Board>
       </DragDropContext>
+      <Footer />
     </div>
   )
 }
