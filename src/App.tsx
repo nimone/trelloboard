@@ -70,6 +70,7 @@ function App() {
               id={list.id}
               key={list.id} 
               name={list.name}
+              numTasks={state.tasks[list.id].length}
               onEdit={(newName: string) => editList(list.id, newName)}
               onDelete={() => deleteList(list.id)}
               onAddTask={(task) => addNewTask(list.id, task)}
@@ -93,7 +94,7 @@ function App() {
               />
             : <Button onClick={() => setShowAddListForm(true)}>
                 <Plus className="mr-1" />
-                <span>Add another list</span>
+                <span>Add {state.lists.length ? "another" : "a"} list</span>
               </Button>
           }
         </Board>

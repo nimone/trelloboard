@@ -9,12 +9,13 @@ interface IProps {
   id: number
   name: string
   children: React.ReactNode
+  numTasks: number
   onEdit: (newName: string) => void
   onDelete: () => void
   onAddTask: (task: string) => void 
 }
 
-function TaskList({ id, name, children, onEdit, onDelete, onAddTask }: IProps) {
+function TaskList({ id, name, children, numTasks, onEdit, onDelete, onAddTask }: IProps) {
   const [showMenu, setShowMenu] = useState(false)
   const [showAddTaskForm, setShowAddTaskForm] = useState(false)
   const [edit, setEdit] = useState(false)
@@ -110,7 +111,7 @@ function TaskList({ id, name, children, onEdit, onDelete, onAddTask }: IProps) {
           onClick={() => setShowAddTaskForm(true)}
         >
           <Plus className="mr-1 w-5 h-5" />
-          <span>Add another card</span>
+          <span>Add {numTasks !== 0 ? "another" : "a"} card</span>
         </Button>
       }
     </div>
