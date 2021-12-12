@@ -4,6 +4,7 @@ import { Droppable } from "react-beautiful-dnd";
 import Button from "./Button";
 import Dropdown, { DropdownItem } from "./Dropdown";
 import TrelloForm, { TrelloInput, TrelloTaskForm } from "./TrelloForm";
+import Modal from "./Modal";
 
 interface IProps {
   id: number
@@ -17,6 +18,7 @@ interface IProps {
 
 function TaskList({ id, name, children, numTasks, onEdit, onDelete, onAddTask }: IProps) {
   const [showMenu, setShowMenu] = useState(false)
+  const [showModal, setShowModal] = useState(false)
   const [showAddTaskForm, setShowAddTaskForm] = useState(false)
   const [edit, setEdit] = useState(false)
   const [editName, setEditName] = useState(name)
@@ -30,6 +32,11 @@ function TaskList({ id, name, children, numTasks, onEdit, onDelete, onAddTask }:
     console.log(editName)
     setEdit(false)
     onEdit(editName)
+  }
+  const handleDelete = () => {
+    if (numTasks > 1) setShowModal(true)
+    else onDelete()
+    setShowMenu(false)
   }
 
   const titleClassName = "font-bold text-gray-700 dark:text-gray-400"
@@ -70,11 +77,31 @@ function TaskList({ id, name, children, numTasks, onEdit, onDelete, onAddTask }:
               <Edit2 className="w-4 h-4 mr-2" />
               <span>Edit</span>
             </DropdownItem>
-            <DropdownItem onClick={onDelete}>
+            <DropdownItem onClick={handleDelete}>
               <Trash className="w-4 h-4 mr-2" />
               <span>Delete</span>
             </DropdownItem>
           </Dropdown>
+        }
+        {showModal &&
+          <Modal 
+            danger
+            title="Are you sure?" 
+            body={`Delete "${name}" with ${numTasks} cards`}
+          >
+            <Button 
+              onClick={onDelete}
+              className="!bg-red-500">
+              <Trash className="mr-2 w-5 h-5" />
+              <span>Delete</span>
+            </Button>
+            <Button 
+              onClick={() => setShowModal(false)}
+              className="!bg-gray-600/50">
+              <X className="mr-2 w-5 h-5" />
+              <span>Cancel</span>
+            </Button>
+          </Modal>
         }
       </section>
 
