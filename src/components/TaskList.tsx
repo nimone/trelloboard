@@ -17,16 +17,11 @@ interface IProps {
 }
 
 function TaskList({ id, name, children, numTasks, onEdit, onDelete, onAddTask }: IProps) {
-  const [showMenu, setShowMenu] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [showAddTaskForm, setShowAddTaskForm] = useState(false)
   const [edit, setEdit] = useState(false)
   const [editName, setEditName] = useState(name)
 
-  const showEditFrom = () => {
-    setEdit(true)
-    setShowMenu(false)
-  }
   const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     console.log(editName)
@@ -36,7 +31,6 @@ function TaskList({ id, name, children, numTasks, onEdit, onDelete, onAddTask }:
   const handleDelete = () => {
     if (numTasks > 1) setShowModal(true)
     else onDelete()
-    setShowMenu(false)
   }
 
   const titleClassName = "font-bold text-gray-700 dark:text-gray-400"
@@ -65,23 +59,25 @@ function TaskList({ id, name, children, numTasks, onEdit, onDelete, onAddTask }:
           </TrelloForm>
           ) : (<>
             <h3 className={titleClassName}>{name}</h3>
-            <MoreHorizontal 
-              className="text-gray-400 cursor-pointer hover:(text-gray-500 dark:text-gray-300)" 
-              onClick={() => setShowMenu(prev => !prev)}
-            />
+            <Dropdown 
+              className="right-0 mx-2 mt-8"
+              trigger={(handleClick) => 
+                <MoreHorizontal 
+                  className="text-gray-400 cursor-pointer hover:(text-gray-500 dark:text-gray-300)" 
+                  onClick={handleClick}
+                />
+              }
+            >
+              <DropdownItem onClick={() => setEdit(true)}>
+                <Edit2 className="w-4 h-4 mr-2" />
+                <span>Edit</span>
+              </DropdownItem>
+              <DropdownItem onClick={handleDelete}>
+                <Trash className="w-4 h-4 mr-2" />
+                <span>Delete</span>
+              </DropdownItem>
+            </Dropdown>
           </>)
-        }
-        {showMenu &&
-          <Dropdown className="right-0 mx-2 mt-8">
-            <DropdownItem onClick={showEditFrom}>
-              <Edit2 className="w-4 h-4 mr-2" />
-              <span>Edit</span>
-            </DropdownItem>
-            <DropdownItem onClick={handleDelete}>
-              <Trash className="w-4 h-4 mr-2" />
-              <span>Delete</span>
-            </DropdownItem>
-          </Dropdown>
         }
         {showModal &&
           <Modal 

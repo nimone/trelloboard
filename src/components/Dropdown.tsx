@@ -1,7 +1,8 @@
-import React from "react"
-import { Edit2, Trash } from "react-feather"
+import React, { useState } from "react"
+import useClickOutside from "../hooks/useClickOutside"
 
 interface IDropDownProps {
+  trigger: (handleClick: () => void) => React.ReactNode
   children: React.ReactNode
   className?: string
 }
@@ -11,21 +12,28 @@ interface IDropDownItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
   className?: string
 }
 
-function Dropdown({ children, className }: IDropDownProps) {
-  return (
-    <div className={`
-      absolute top-0 w-44 z-10 py-0.5
-      bg-gray-100 text-base
-      rounded shadow-lg list-none
-      dark:bg-gray-700 
-      ${className}
-    `}
-    >
-    <ul className="py-1">
-      {children}
-    </ul>
-  </div>
-  )
+function Dropdown({ trigger, children, className }: IDropDownProps) {
+  const [show, setShow] = useState(false)
+  const dropdownRef = useClickOutside(() => setShow(false))
+
+  return (<div ref={dropdownRef}>
+    {trigger(() => setShow(prev => !prev))}
+    {show && (
+      <div className={`
+        absolute top-0 w-44 z-10 py-0.5
+        bg-gray-100 text-base
+        rounded shadow-lg list-none
+        dark:bg-gray-800/95
+        ${className}
+      `}
+        onClick={() => setShow(false)}
+      >
+        <ul className="py-1">
+          {children}
+        </ul>
+      </div>
+    )}
+  </div>)
 }
 
 export function DropdownItem({ children, ...props }: IDropDownItemProps) {
