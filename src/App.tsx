@@ -1,4 +1,4 @@
-import { useReducer, useState } from 'react'
+import { useState } from 'react'
 import { Plus } from 'react-feather'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 import Board from './components/Board'
@@ -7,8 +7,8 @@ import Header from './components/Header'
 import Task from './components/Task'
 import TaskList from './components/TaskList'
 import trelloReducer from './trelloReducer'
-import useLocalStorage from './useLocalStorage'
-import { TrelloListForm, TrelloTaskForm } from './components/TrelloForm'
+import useLocalStorage from './hooks/useLocalStorage'
+import { TrelloListForm } from './components/TrelloForm'
 import Footer from './components/Footer'
 
 
