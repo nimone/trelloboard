@@ -75,25 +75,30 @@ export default function trelloReducer(state: IState, action: ActionType) {
       
     case 'DRAG_TASK':
       const { fromListID, toListID, fromTaskIdx, toTaskIdx } = action.payload
+      const newListTasks = [...state.tasks[fromListID]]
+      const taskToDrag = newListTasks.splice(fromTaskIdx, 1)[0]
 
       if (fromListID === toListID) {
-        const newListTasks = [...state.tasks[fromListID]];
-        [newListTasks[fromTaskIdx], newListTasks[toTaskIdx]] = 
-          [newListTasks[toTaskIdx], newListTasks[fromTaskIdx]]
-          
         return {
           ...state, 
-          tasks: {...state.tasks, [fromListID]: newListTasks}
+          tasks: {
+            ...state.tasks,
+            [toListID]: [
+              ...newListTasks.slice(0, toTaskIdx),
+              taskToDrag,
+              ...newListTasks.slice(toTaskIdx),
+            ]
+          }
         }
       }
       return {
         ...state,
         tasks: {
           ...state.tasks,
-          [fromListID]: state.tasks[fromListID].filter((_, idx) => fromTaskIdx !=  idx),
+          [fromListID]: newListTasks,
           [toListID]: [
             ...state.tasks[toListID].slice(0, toTaskIdx),
-            state.tasks[fromListID][fromTaskIdx],
+            taskToDrag,
             ...state.tasks[toListID].slice(toTaskIdx),
           ],
         }
