@@ -1,23 +1,25 @@
-lockfileVersion: 5.3
+lockfileVersion: 5.4
 
 specifiers:
-  '@types/react': ^17.0.33
+  '@types/react': ^17.0.37
   '@types/react-beautiful-dnd': ^13.1.2
-  '@types/react-dom': ^17.0.10
-  '@vitejs/plugin-react': ^1.0.7
+  '@types/react-dom': ^17.0.11
+  '@vitejs/plugin-react': ^1.1.1
   '@windicss/plugin-scrollbar': ^1.2.3
+  clsx: ^1.2.1
   react: ^17.0.2
   react-beautiful-dnd: ^13.1.0
   react-dom: ^17.0.2
   react-feather: ^2.0.9
-  typescript: ^4.4.4
-  vite: ^2.7.0
+  typescript: ^4.5.2
+  vite: ^2.7.1
   vite-plugin-windicss: ^1.5.4
   windicss: ^3.2.1
 
 dependencies:
+  clsx: 1.2.1
   react: 17.0.2
-  react-beautiful-dnd: 13.1.0_react-dom@17.0.2+react@17.0.2
+  react-beautiful-dnd: 13.1.0_sfoxds7t5ydpegc3knd667wn6m
   react-dom: 17.0.2_react@17.0.2
   react-feather: 2.0.9_react@17.0.2
 
@@ -229,6 +231,8 @@ packages:
     resolution: {integrity: sha512-6V0qdPUaiVHH3RtZeLIsc+6pDhbYzHR8ogA8w+f+Wc77DuXto19g2QUwveINoS34Uw+W8/hQDGJCx+i4n7xcng==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+    dependencies:
+      '@babel/types': 7.16.0
     dev: true
 
   /@babel/plugin-syntax-jsx/7.16.0_@babel+core@7.16.0:
@@ -463,15 +467,15 @@ packages:
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
     hasBin: true
     dependencies:
-      caniuse-lite: 1.0.30001285
+      caniuse-lite: 1.0.30001390
       electron-to-chromium: 1.4.13
       escalade: 3.1.1
       node-releases: 2.0.1
       picocolors: 1.0.0
     dev: true
 
-  /caniuse-lite/1.0.30001285:
-    resolution: {integrity: sha512-KAOkuUtcQ901MtmvxfKD+ODHH9YVDYnBt+TGYSz2KIfnq22CiArbUxXPN9067gNbgMlnNYRSwho8OPXZPALB9Q==}
+  /caniuse-lite/1.0.30001390:
+    resolution: {integrity: sha512-sS4CaUM+/+vqQUlCvCJ2WtDlV81aWtHhqeEVkLokVJJa3ViN4zDxAGfq9R8i1m90uGHxo99cy10Od+lvn3hf0g==}
     dev: true
 
   /chalk/2.4.2:
@@ -482,6 +486,11 @@ packages:
       escape-string-regexp: 1.0.5
       supports-color: 5.5.0
     dev: true
+
+  /clsx/1.2.1:
+    resolution: {integrity: sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg==}
+    engines: {node: '>=6'}
+    dev: false
 
   /color-convert/1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
@@ -909,7 +918,7 @@ packages:
     resolution: {integrity: sha512-tQkJl2GRWh83ui2DiPTJz9wEiMN20syf+5oKfB03yYP7ioZcJwsIK8FjrtLwH1m7C7e+Tt2yYBlrOpdT+dyeIQ==}
     dev: false
 
-  /react-beautiful-dnd/13.1.0_react-dom@17.0.2+react@17.0.2:
+  /react-beautiful-dnd/13.1.0_sfoxds7t5ydpegc3knd667wn6m:
     resolution: {integrity: sha512-aGvblPZTJowOWUNiwd6tNfEpgkX5OxmpqxHKNW/4VmvZTNTbeiq7bA3bn5T+QSF2uibXB0D1DmJsb1aC/+3cUA==}
     peerDependencies:
       react: ^16.8.5 || ^17.0.0
@@ -921,7 +930,7 @@ packages:
       raf-schd: 4.0.3
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
-      react-redux: 7.2.6_react-dom@17.0.2+react@17.0.2
+      react-redux: 7.2.6_sfoxds7t5ydpegc3knd667wn6m
       redux: 4.1.2
       use-memo-one: 1.1.2_react@17.0.2
     transitivePeerDependencies:
@@ -956,7 +965,7 @@ packages:
     resolution: {integrity: sha512-w2GsyukL62IJnlaff/nRegPQR94C/XXamvMWmSHRJ4y7Ts/4ocGRmTHvOs8PSE6pB3dWOrD/nueuU5sduBsQ4w==}
     dev: false
 
-  /react-redux/7.2.6_react-dom@17.0.2+react@17.0.2:
+  /react-redux/7.2.6_sfoxds7t5ydpegc3knd667wn6m:
     resolution: {integrity: sha512-10RPdsz0UUrRL1NZE0ejTkucnclYSgXp5q+tB5SWx2qeG2ZJQJyymgAhwKy73yiL/13btfB6fPr+rgbMAaZIAQ==}
     peerDependencies:
       react: ^16.8.3 || ^17
