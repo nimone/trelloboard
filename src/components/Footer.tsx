@@ -9,6 +9,7 @@ function Footer({}) {
         "flex items-center",
         "absolute bottom-3 right-3",
         "bg-gray-300/30 text-sm text-white",
+        "backdrop-filter backdrop-blur",
         "p-2 rounded-lg",
         "dark:(bg-gray-600/60)"
       )}

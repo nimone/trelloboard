@@ -21,7 +21,7 @@ function Modal({ title, body, danger, children }: IProps) {
         className={clsx(
           "relative w-full max-w-xs",
           "p-4 m-auto rounded-lg shadow-lg",
-          "bg-gray-200 text-gray-800/80 ",
+          "bg-gray-200 text-gray-800/80 backdrop-filter backdrop-blur",
           "dark:(bg-gray-800/90 text-gray-200)",
           danger && "border-2 border-red-400/80 dark:(border-red-400/50)"
         )}

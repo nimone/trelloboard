@@ -24,9 +24,10 @@ function Dropdown({ trigger, children, className }: IDropDownProps) {
         <div
           className={clsx(
             "absolute top-0 w-44 z-10 py-0.5",
-            "bg-gray-100 text-base",
+            "bg-gray-100 bg-opacity-80 text-base",
+            "backdrop-filter backdrop-blur",
             "rounded shadow-lg list-none",
-            "dark:bg-gray-800/95",
+            "dark:bg-gray-800",
             className
           )}
           onClick={() => setShow(false)}

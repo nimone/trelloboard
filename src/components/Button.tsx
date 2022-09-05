@@ -19,11 +19,16 @@ function Button({
     <button
       className={clsx(
         "flex items-center justify-center",
-        "bg-gray-300/40 rounded px-2 py-1",
-        "text-white whitespace-nowrap",
+        "rounded px-2 py-1",
+        "whitespace-nowrap",
         "focus:(outline-none)",
-        "dark:(bg-gray-600/40)",
-        secondary && "!bg-transparent !text-gray-500 px-1",
+        secondary
+          ? "!text-gray-500"
+          : [
+              "bg-gray-300/40 text-white dark:(bg-gray-700/40)",
+              "backdrop-filter backdrop-blur",
+              "border border-gray-500/30",
+            ],
         floating &&
           "!bg-gray-100/50 !text-gray-600 !p-px !dark:(bg-gray-700/70 text-gray-400)",
         className

@@ -115,7 +115,7 @@ function TaskList({
         {(provided) => (
           <ul
             className={clsx(
-              "flex flex-col gap-1 flex-1",
+              "flex flex-col gap-1.5 flex-1",
               "max-h-[75vh] px-1 mx-1 pb-2",
               "scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent scrollbar-thumb-rounded-full",
               "dark:(scrollbar-thumb-gray-600)"
