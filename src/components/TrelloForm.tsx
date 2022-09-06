@@ -1,6 +1,7 @@
 import clsx from "clsx"
 import React, { useEffect, useRef, useState } from "react"
 import { Check, X } from "react-feather"
+import useTrelloStore from "../store"
 import Button from "./Button"
 
 interface IFormProps extends React.FormHTMLAttributes<HTMLFormElement> {
@@ -80,11 +81,14 @@ export function TrelloListForm({
   className,
 }: ITrelloFormProps) {
   const [input, setInput] = useState(inputValue)
+  const addList = useTrelloStore((state) => state.addList)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!input) return
+    addList(input)
     onSubmit(input)
+    setInput("")
   }
 
   return (

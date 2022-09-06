@@ -6,40 +6,34 @@ import Dropdown, { DropdownItem } from "./Dropdown"
 import TrelloForm, { TrelloInput, TrelloTaskForm } from "./TrelloForm"
 import Modal from "./Modal"
 import clsx from "clsx"
+import useTrelloStore from "../store"
 
 interface IProps {
-  id: number
+  id: string
   name: string
   children: React.ReactNode
   numTasks: number
-  onEdit: (newName: string) => void
-  onDelete: () => void
-  onAddTask: (task: string) => void
 }
 
-function TaskList({
-  id,
-  name,
-  children,
-  numTasks,
-  onEdit,
-  onDelete,
-  onAddTask,
-}: IProps) {
+function TaskList({ id, name, children, numTasks }: IProps) {
   const [showModal, setShowModal] = useState(false)
   const [showAddTaskForm, setShowAddTaskForm] = useState(false)
   const [edit, setEdit] = useState(false)
   const [editName, setEditName] = useState(name)
 
+  const addTask = useTrelloStore((state) => state.addTask)
+  const editList = useTrelloStore((state) => state.editList)
+  const deleteList = useTrelloStore((state) => state.deleteList)
+
   const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(editName)
     setEdit(false)
-    onEdit(editName)
+    editList(id, editName)
   }
   const handleDelete = () => {
-    if (numTasks > 1) setShowModal(true)
-    else onDelete()
+    if (showModal) deleteList(id)
+    else if (numTasks > 1) setShowModal(true)
+    else deleteList(id)
   }
 
   const titleClassName = "font-bold text-gray-700 dark:text-gray-400"
@@ -96,7 +90,7 @@ function TaskList({
             title="Are you sure?"
             body={`Delete "${name}" with ${numTasks} cards`}
           >
-            <Button onClick={onDelete} className="!bg-red-500">
+            <Button onClick={handleDelete} className="!bg-red-500">
               <Trash className="mr-2 w-5 h-5" />
               <span>Delete</span>
             </Button>
@@ -126,7 +120,7 @@ function TaskList({
             {showAddTaskForm && (
               <TrelloTaskForm
                 onSubmit={(task) => {
-                  onAddTask(task)
+                  addTask(id, task)
                   setShowAddTaskForm(false)
                 }}
                 inputValue=""
