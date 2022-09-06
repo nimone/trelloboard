@@ -96,27 +96,16 @@ const useTrelloStore = create<TrelloState>()(
           fromTaskIdx: number,
           toTaskIdx: number
         ) => {
-          // drag on same list (re-arrange task)
-          if (fromListId === toListId) {
-            set(
-              produce(({ tasks }: TrelloState) => {
-                ;[tasks[toListId][toTaskIdx], tasks[toListId][fromTaskIdx]] = [
-                  tasks[toListId][fromTaskIdx],
-                  tasks[toListId][toTaskIdx],
-                ]
-              })
-            )
-          } else {
-            set(
-              produce(({ tasks }: TrelloState) => {
-                tasks[toListId] = [
-                  ...tasks[toListId].slice(0, toTaskIdx),
-                  tasks[fromListId].splice(fromTaskIdx, 1)[0],
-                  ...tasks[toListId].slice(toTaskIdx),
-                ]
-              })
-            )
-          }
+          set(
+            produce(({ tasks }: TrelloState) => {
+              const taskToShift = tasks[fromListId].splice(fromTaskIdx, 1)[0]
+              tasks[toListId] = [
+                ...tasks[toListId].slice(0, toTaskIdx),
+                taskToShift,
+                ...tasks[toListId].slice(toTaskIdx),
+              ]
+            })
+          )
         },
       }),
       { name: "trelloboard-state" }
