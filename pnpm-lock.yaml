@@ -7,6 +7,8 @@ specifiers:
   '@vitejs/plugin-react': ^1.1.1
   '@windicss/plugin-scrollbar': ^1.2.3
   clsx: ^1.2.1
+  immer: ^9.0.15
+  nanoid: ^4.0.0
   react: ^17.0.2
   react-beautiful-dnd: ^13.1.0
   react-dom: ^17.0.2
@@ -15,13 +17,17 @@ specifiers:
   vite: ^2.7.1
   vite-plugin-windicss: ^1.5.4
   windicss: ^3.2.1
+  zustand: ^4.1.1
 
 dependencies:
   clsx: 1.2.1
+  immer: 9.0.15
+  nanoid: 4.0.0
   react: 17.0.2
   react-beautiful-dnd: 13.1.0_sfoxds7t5ydpegc3knd667wn6m
   react-dom: 17.0.2_react@17.0.2
   react-feather: 2.0.9_react@17.0.2
+  zustand: 4.1.1_immer@9.0.15+react@17.0.2
 
 devDependencies:
   '@types/react': 17.0.37
@@ -778,6 +784,10 @@ packages:
       react-is: 16.13.1
     dev: false
 
+  /immer/9.0.15:
+    resolution: {integrity: sha512-2eB/sswms9AEUSkOm4SbV5Y7Vmt/bKRwByd52jfLkW4OLYeaTP3EEiJ9agqU0O/tq6Dk62Zfj+TJSqfm1rLVGQ==}
+    dev: false
+
   /is-core-module/2.8.0:
     resolution: {integrity: sha512-vd15qHsaqrRL7dtH6QNuy0ndJmRDrS9HAM1CAiSifNUFv4x1a0CCVsj18hJ1mShxIG6T2i1sO78MkP56r0nYRw==}
     dependencies:
@@ -870,6 +880,12 @@ packages:
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
     hasBin: true
     dev: true
+
+  /nanoid/4.0.0:
+    resolution: {integrity: sha512-IgBP8piMxe/gf73RTQx7hmnhwz0aaEXYakvqZyE302IXW3HyVNhdNGC+O2MwMAVhLEnvXlvKtGbtJf6wvHihCg==}
+    engines: {node: ^14 || ^16 || >=18}
+    hasBin: true
+    dev: false
 
   /node-releases/2.0.1:
     resolution: {integrity: sha512-CqyzN6z7Q6aMeF/ktcMVTzhAHCEpf8SOarwpzpf8pNBY2k5/oM34UHldUwp8VKI7uxct2HxSRdJjBaZeESzcxA==}
@@ -1103,6 +1119,14 @@ packages:
       react: 17.0.2
     dev: false
 
+  /use-sync-external-store/1.2.0_react@17.0.2:
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 17.0.2
+    dev: false
+
   /vite-plugin-windicss/1.5.4_vite@2.7.1:
     resolution: {integrity: sha512-bG2IERA9J50MGq1QEbGC/PjrkVIaq2b3LilCeidyIpmFV/4aR14/wGDe83SobF+8coIeJ+23S0uDK/fXX5X0pQ==}
     peerDependencies:
@@ -1146,3 +1170,20 @@ packages:
     engines: {node: '>= 12'}
     hasBin: true
     dev: true
+
+  /zustand/4.1.1_immer@9.0.15+react@17.0.2:
+    resolution: {integrity: sha512-h4F3WMqsZgvvaE0n3lThx4MM81Ls9xebjvrABNzf5+jb3/03YjNTSgZXeyrvXDArMeV9untvWXRw1tY+ntPYbA==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      immer: '>=9.0'
+      react: '>=16.8'
+    peerDependenciesMeta:
+      immer:
+        optional: true
+      react:
+        optional: true
+    dependencies:
+      immer: 9.0.15
+      react: 17.0.2
+      use-sync-external-store: 1.2.0_react@17.0.2
+    dev: false
