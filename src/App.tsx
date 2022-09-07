@@ -63,6 +63,7 @@ function App() {
                   listId={list.id}
                   idx={idx}
                   content={task.content}
+                  className="mb-1.5"
                 />
               ))}
             </TaskList>

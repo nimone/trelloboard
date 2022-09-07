@@ -9,9 +9,10 @@ interface IProps {
   listId: string
   idx: number
   content: string
+  className?: string
 }
 
-function Task({ listId, id, idx, content }: IProps) {
+function Task({ listId, id, idx, content, className }: IProps) {
   const deleteTask = useTrelloStore((state) => state.deleteTask)
 
   return (
@@ -22,7 +23,8 @@ function Task({ listId, id, idx, content }: IProps) {
             "relative group",
             "bg-gray-200 text-sm p-2",
             "shadow rounded list-none",
-            "dark:(bg-gray-700)"
+            "dark:(bg-gray-700)",
+            className
           )}
           ref={provided.innerRef}
           {...provided.draggableProps}
