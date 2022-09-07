@@ -148,7 +148,8 @@ export function TrelloTaskForm({
       className={clsx(
         "relative p-2 group",
         "bg-gray-200 text-gray-800 rounded",
-        "dark:(bg-gray-700 text-gray-200) ${className}"
+        "dark:(bg-gray-700 text-gray-200)",
+        className
       )}
     >
       <TrelloTextArea

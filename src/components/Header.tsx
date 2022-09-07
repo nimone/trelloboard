@@ -50,7 +50,7 @@ function Header({ title }: IProps) {
         className="right-6 mt-11 ml-auto"
         trigger={(handleClick) => (
           <Button
-            className="ml-auto text-gray-500 dark:text-gray-200"
+            className="ml-auto text-gray-800 dark:text-gray-200"
             onClick={handleClick}
           >
             <Menu />

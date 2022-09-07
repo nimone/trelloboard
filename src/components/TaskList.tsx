@@ -123,6 +123,7 @@ function TaskList({ list, children, numTasks }: IProps) {
                 }}
                 inputValue=""
                 onCancel={() => setShowAddTaskForm(false)}
+                className="mb-2"
               />
             )}
             {provided.placeholder}
