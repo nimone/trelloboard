@@ -13,13 +13,15 @@ export type TaskItem = {
   content: string
 }
 
-interface TrelloState {
+export interface TrelloState {
   lists: ListItem[]
   tasks: {
     [id: string]: TaskItem[]
   }
   darkMode: boolean
+}
 
+interface TrelloMutations {
   setDarkMode: (darkMode: boolean) => void
 
   addList: (name: string) => void
@@ -34,15 +36,22 @@ interface TrelloState {
     fromTaskIdx: number,
     toTaskIdx: number
   ) => void
+  getState: () => TrelloState
+  setState: (state: TrelloState) => void
+  isEmpty: () => boolean
 }
 
-const useTrelloStore = create<TrelloState>()(
+const useTrelloStore = create<TrelloState & TrelloMutations>()(
   devtools(
     persist(
-      (set) => ({
+      (set, get) => ({
         lists: [],
         tasks: {},
         darkMode: window.matchMedia("(prefers-color-scheme: dark)").matches,
+
+        getState: get,
+        setState: set,
+        isEmpty: () => get().lists.length === 0,
 
         setDarkMode: (darkMode: boolean) => set({ darkMode }),
 

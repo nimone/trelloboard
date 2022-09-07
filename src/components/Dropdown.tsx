@@ -20,21 +20,20 @@ function Dropdown({ trigger, children, className }: IDropDownProps) {
   return (
     <div ref={dropdownRef}>
       {trigger(() => setShow((prev) => !prev))}
-      {show && (
-        <div
-          className={clsx(
-            "absolute top-0 w-44 z-10 py-0.5",
-            "bg-gray-100 bg-opacity-80 text-base",
-            "backdrop-filter backdrop-blur",
-            "rounded shadow-lg list-none",
-            "dark:bg-gray-800",
-            className
-          )}
-          onClick={() => setShow(false)}
-        >
-          <ul className="py-1">{children}</ul>
-        </div>
-      )}
+      <div
+        className={clsx(
+          "absolute top-0 w-44 z-10 py-0.5",
+          "bg-gray-100/80 text-base",
+          "backdrop-filter backdrop-blur",
+          "rounded shadow-lg list-none",
+          "dark:bg-gray-800/80",
+          !show && "hidden",
+          className
+        )}
+        onClick={() => setShow(false)}
+      >
+        <ul className="py-1 space-y-0.5">{children}</ul>
+      </div>
     </div>
   )
 }
