@@ -1,22 +1,21 @@
 import clsx from "clsx"
 import { Draggable } from "react-beautiful-dnd"
 import { X } from "react-feather"
-import useTrelloStore from "../store"
+import useTrelloStore, { ListItem, TaskItem } from "../store"
 import Button from "./Button"
 
-interface IProps {
-  id: string
-  listId: string
+export interface ITaskProps {
+  task: TaskItem
+  listId: ListItem["id"]
   idx: number
-  content: string
   className?: string
 }
 
-function Task({ listId, id, idx, content, className }: IProps) {
+function Task({ task, listId, idx, className }: ITaskProps) {
   const deleteTask = useTrelloStore((state) => state.deleteTask)
 
   return (
-    <Draggable index={idx} draggableId={id.toString()}>
+    <Draggable index={idx} draggableId={task.id.toString()}>
       {(provided) => (
         <li
           className={clsx(
@@ -30,9 +29,9 @@ function Task({ listId, id, idx, content, className }: IProps) {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
         >
-          <p className="text-gray-800 dark:text-gray-200">{content}</p>
+          <p className="text-gray-800 dark:text-gray-200">{task.content}</p>
           <Button
-            onClick={() => deleteTask(listId, id)}
+            onClick={() => deleteTask(listId, task.id)}
             className="w-6 h-6 absolute top-1 right-1 hidden group-hover:block"
             floating
           >

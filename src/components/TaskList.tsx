@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { ReactNode, useState } from "react"
 import { Check, Edit2, MoreHorizontal, Plus, Trash, X } from "react-feather"
 import { Droppable } from "react-beautiful-dnd"
 import Button from "./Button"
@@ -6,20 +6,19 @@ import Dropdown, { DropdownItem } from "./Dropdown"
 import TrelloForm, { TrelloInput, TrelloTaskForm } from "./TrelloForm"
 import Modal from "./Modal"
 import clsx from "clsx"
-import useTrelloStore from "../store"
+import useTrelloStore, { ListItem } from "../store"
 
 interface IProps {
-  id: string
-  name: string
-  children: React.ReactNode
+  list: ListItem
+  children: ReactNode
   numTasks: number
 }
 
-function TaskList({ id, name, children, numTasks }: IProps) {
+function TaskList({ list, children, numTasks }: IProps) {
   const [showModal, setShowModal] = useState(false)
   const [showAddTaskForm, setShowAddTaskForm] = useState(false)
   const [edit, setEdit] = useState(false)
-  const [editName, setEditName] = useState(name)
+  const [editName, setEditName] = useState(list.name)
 
   const addTask = useTrelloStore((state) => state.addTask)
   const editList = useTrelloStore((state) => state.editList)
@@ -28,12 +27,12 @@ function TaskList({ id, name, children, numTasks }: IProps) {
   const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setEdit(false)
-    editList(id, editName)
+    editList(list.id, editName)
   }
   const handleDelete = () => {
-    if (showModal) deleteList(id)
+    if (showModal) deleteList(list.id)
     else if (numTasks > 1) setShowModal(true)
-    else deleteList(id)
+    else deleteList(list.id)
   }
 
   const titleClassName = "font-bold text-gray-700 dark:text-gray-400"
@@ -63,7 +62,7 @@ function TaskList({ id, name, children, numTasks }: IProps) {
           </TrelloForm>
         ) : (
           <>
-            <h3 className={titleClassName}>{name}</h3>
+            <h3 className={titleClassName}>{list.name}</h3>
             <Dropdown
               className="right-0 mx-2 mt-8"
               trigger={(handleClick) => (
@@ -105,7 +104,7 @@ function TaskList({ id, name, children, numTasks }: IProps) {
         )}
       </section>
 
-      <Droppable droppableId={id.toString()} key={id}>
+      <Droppable droppableId={list.id.toString()} key={list.id}>
         {(provided) => (
           <ul
             className={clsx(
@@ -119,7 +118,7 @@ function TaskList({ id, name, children, numTasks }: IProps) {
             {showAddTaskForm && (
               <TrelloTaskForm
                 onSubmit={(task) => {
-                  addTask(id, task)
+                  addTask(list.id, task)
                   setShowAddTaskForm(false)
                 }}
                 inputValue=""

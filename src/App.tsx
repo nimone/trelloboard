@@ -51,18 +51,16 @@ function App() {
         <Board>
           {lists.map((list) => (
             <TaskList
-              id={list.id}
               key={list.id}
-              name={list.name}
+              list={list}
               numTasks={tasks[list.id].length}
             >
               {tasks[list.id].map((task, idx) => (
                 <Task
                   key={task.id}
-                  id={task.id}
+                  task={task}
                   listId={list.id}
                   idx={idx}
-                  content={task.content}
                   className="mb-1.5"
                 />
               ))}
