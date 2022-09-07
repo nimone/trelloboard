@@ -37,9 +37,14 @@ function App() {
   return (
     <div
       className={clsx(
-        "App flex flex-col bg-random-image min-h-screen",
+        "App flex flex-col min-h-screen bg-cover bg-center",
         darkMode && "dark"
       )}
+      style={{
+        backgroundImage: `linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url(https://source.unsplash.com/random/${
+          window.screen.width + "x" + window.screen.height
+        }?wallpaper,nature)`,
+      }}
     >
       <Header title="Trello Board" />
       <DragDropContext onDragEnd={handleTaskDrag}>
