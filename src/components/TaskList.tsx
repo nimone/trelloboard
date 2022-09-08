@@ -23,16 +23,16 @@ function TaskList({ list, children, numTasks }: IProps) {
   const addTask = useTrelloStore((state) => state.addTask)
   const editList = useTrelloStore((state) => state.editList)
   const deleteList = useTrelloStore((state) => state.deleteList)
+  const currentProject = useTrelloStore((state) => state.currentProject)
 
   const handleEdit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setEdit(false)
-    editList(list.id, editName)
+    editList(currentProject, list.id, { name: editName })
   }
   const handleDelete = () => {
-    if (showModal) deleteList(list.id)
-    else if (numTasks > 1) setShowModal(true)
-    else deleteList(list.id)
+    if (showModal || numTasks <= 1) deleteList(currentProject, list.id)
+    setShowModal(true)
   }
 
   const titleClassName = "font-bold text-gray-700 dark:text-gray-400"

@@ -10,6 +10,7 @@ interface IDropDownProps {
 
 interface IDropDownItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
   children: React.ReactNode
+  disabled?: boolean
   className?: string
 }
 
@@ -38,16 +39,24 @@ function Dropdown({ trigger, children, className }: IDropDownProps) {
   )
 }
 
-export function DropdownItem({ children, ...props }: IDropDownItemProps) {
+export function DropdownItem({
+  children,
+  disabled,
+  ...props
+}: IDropDownItemProps) {
   return (
     <li
       className={clsx(
         "flex items-center block px-2 py-1",
-        "text-sm text-gray-700 cursor-pointer ",
-        "hover:bg-gray-200",
-        "dark:(text-gray-200)",
-        "dark:hover:(text-white bg-gray-600)"
+        "text-sm",
+        disabled
+          ? "text-gray-400 dark:text-gray-500"
+          : [
+              "text-gray-700 hover:bg-gray-200 cursor-pointer",
+              "dark:(text-gray-200) dark:hover:(text-white bg-gray-600)",
+            ]
       )}
+      onClick={!disabled ? props.onClick : undefined}
       {...props}
     >
       {children}

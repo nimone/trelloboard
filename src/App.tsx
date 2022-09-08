@@ -13,7 +13,7 @@ import useTrelloStore from "./store"
 
 function App() {
   const [showAddListForm, setShowAddListForm] = useState(false)
-  const lists = useTrelloStore((state) => state.lists)
+  const lists = useTrelloStore((state) => state.lists[state.currentProject])
   const tasks = useTrelloStore((state) => state.tasks)
   const shiftTask = useTrelloStore((state) => state.shiftTask)
   const darkMode = useTrelloStore((state) => state.darkMode)

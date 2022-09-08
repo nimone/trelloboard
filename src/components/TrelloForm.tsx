@@ -82,11 +82,12 @@ export function TrelloListForm({
 }: ITrelloFormProps) {
   const [input, setInput] = useState(inputValue)
   const addList = useTrelloStore((state) => state.addList)
+  const currentProject = useTrelloStore((state) => state.currentProject)
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     if (!input) return
-    addList(input)
+    addList(currentProject, input)
     onSubmit(input)
     setInput("")
   }
