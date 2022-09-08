@@ -13,20 +13,34 @@ export type TaskItem = {
   content: string
 }
 
+export type TrelloProject = {
+  id: string
+  name: string
+}
+
 export interface TrelloState {
-  lists: ListItem[]
-  tasks: {
-    [id: string]: TaskItem[]
+  projects: TrelloProject[]
+  lists: {
+    [id: TrelloProject["id"]]: ListItem[]
   }
+  tasks: {
+    [id: ListItem["id"]]: TaskItem[]
+  }
+  currentProject: TrelloProject["id"]
   darkMode: boolean
 }
 
 interface TrelloMutations {
   setDarkMode: (darkMode: boolean) => void
 
-  addList: (name: string) => void
-  deleteList: (id: string) => void
-  editList: (id: string, newName: string) => void
+  addProject: (name: string) => void
+  deleteProject: (id: string) => void
+  editProject: (id: string, changes: Partial<TrelloProject>) => void
+  setCurrentProject: (projectId: string) => void
+
+  addList: (projectId: string, name: string) => void
+  deleteList: (projectId: string, id: string) => void
+  editList: (projectId: string, id: string, changes: Partial<ListItem>) => void
 
   addTask: (listId: string, content: string) => void
   deleteTask: (listId: string, taskId: string) => void
@@ -36,6 +50,7 @@ interface TrelloMutations {
     fromTaskIdx: number,
     toTaskIdx: number
   ) => void
+
   getState: () => TrelloState
   setState: (state: TrelloState) => void
   isEmpty: () => boolean
@@ -45,45 +60,72 @@ const useTrelloStore = create<TrelloState & TrelloMutations>()(
   devtools(
     persist(
       (set, get) => ({
-        lists: [],
+        projects: [{ id: "0", name: "Project 1" }],
+        lists: { "0": [] },
         tasks: {},
+        currentProject: "0",
         darkMode: window.matchMedia("(prefers-color-scheme: dark)").matches,
 
         getState: get,
         setState: set,
-        isEmpty: () => get().lists.length === 0,
+        isEmpty: () => Object.keys(get().lists).length === 0,
 
         setDarkMode: (darkMode: boolean) => set({ darkMode }),
 
-        addList: (name: string) => {
-          const id = nanoid()
+        setCurrentProject: (projectId: string) =>
+          set({ currentProject: projectId }),
 
+        addProject: (name: string) => {
+          const id = nanoid()
+          set(
+            produce(({ projects }: TrelloState) => {
+              projects.push({ id, name })
+            })
+          )
+        },
+
+        editProject: (id: string, changes: Partial<TrelloProject>) => {
+          set((state) => ({
+            projects: state.projects.map((project) =>
+              project.id === id ? { ...project, ...changes } : project
+            ),
+          }))
+        },
+
+        deleteProject: (id: string) => {
+          set((state) => ({
+            projects: state.projects.filter((project) => project.id !== id),
+          }))
+        },
+
+        addList: (projectId: string, name: string) => {
+          const id = nanoid()
           set(
             produce((state: TrelloState) => {
-              state.lists.push({ id, name })
+              state.lists[projectId].push({ id, name })
               state.tasks[id] = []
             })
           )
         },
 
-        deleteList: (id: string) =>
-          set((state) => {
-            const newTasks = { ...state.tasks }
-            delete newTasks[id]
+        deleteList: (projectId: string, id: string) =>
+          set(
+            produce(({ lists, tasks }: TrelloState) => {
+              lists[projectId] = lists[projectId].filter(
+                (list) => list.id !== id
+              )
+              delete tasks[id]
+            })
+          ),
 
-            return {
-              lists: state.lists.filter((list) => list.id != id),
-              tasks: newTasks,
-            }
-          }),
-
-        editList: (id: string, newName: string) =>
-          set((state) => ({
-            lists: state.lists.map((l) => ({
-              ...l,
-              name: l.id === id ? newName : l.name,
-            })),
-          })),
+        editList: (projectId: string, id: string, changes: Partial<ListItem>) =>
+          set(
+            produce(({ lists }: TrelloState) => {
+              lists[projectId] = lists[projectId].map((list) =>
+                list.id === id ? { ...list, ...changes } : list
+              )
+            })
+          ),
 
         addTask: (listId: string, content: string) =>
           set(
