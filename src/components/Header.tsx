@@ -4,6 +4,7 @@ import useTrelloStore, { TrelloState } from "../store"
 import Button from "./Button"
 import Dropdown, { DropdownItem } from "./Dropdown"
 import Modal from "./Modal"
+import ProjectSelector from "./ProjectSelector"
 
 interface IProps {
   title: string
@@ -42,7 +43,8 @@ function Header({ title }: IProps) {
   }
 
   return (
-    <header className="flex items-center px-6 py-2">
+    <header className="flex items-center px-4 py-2">
+      <ProjectSelector className="ml-auto" />
       <h1 className="text-xl text-white font-bold mx-auto drop-shadow-xl">
         {title}
       </h1>
