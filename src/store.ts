@@ -60,7 +60,7 @@ const useTrelloStore = create<TrelloState & TrelloMutations>()(
   devtools(
     persist(
       (set, get) => ({
-        projects: [{ id: "0", name: "Project 1" }],
+        projects: [{ id: "0", name: "My Project Board" }],
         lists: { "0": [] },
         tasks: {},
         currentProject: "0",
