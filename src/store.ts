@@ -78,8 +78,9 @@ const useTrelloStore = create<TrelloState & TrelloMutations>()(
         addProject: (name: string) => {
           const id = nanoid()
           set(
-            produce(({ projects }: TrelloState) => {
+            produce(({ projects, lists }: TrelloState) => {
               projects.push({ id, name })
+              lists[id] = []
             })
           )
         },

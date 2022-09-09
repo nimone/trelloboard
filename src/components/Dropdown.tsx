@@ -1,11 +1,13 @@
 import clsx from "clsx"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import useClickOutside from "../hooks/useClickOutside"
 
 interface IDropDownProps {
   trigger: (handleClick: () => void) => React.ReactNode
   children: React.ReactNode
   className?: string
+  onOpen?: () => void
+  onClose?: () => void
 }
 
 interface IDropDownItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
@@ -14,16 +16,26 @@ interface IDropDownItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
   className?: string
 }
 
-function Dropdown({ trigger, children, className }: IDropDownProps) {
+function Dropdown({
+  trigger,
+  children,
+  className,
+  onOpen,
+  onClose,
+}: IDropDownProps) {
   const [show, setShow] = useState(false)
   const dropdownRef = useClickOutside(() => setShow(false))
+
+  useEffect(() => {
+    show ? onOpen?.() : onClose?.()
+  }, [show])
 
   return (
     <div ref={dropdownRef}>
       {trigger(() => setShow((prev) => !prev))}
       <div
         className={clsx(
-          "absolute top-0 w-44 z-10 py-0.5",
+          "absolute top-0 min-w-44 z-10 py-0.5",
           "bg-gray-100/80 text-base",
           "backdrop-filter backdrop-blur",
           "rounded shadow-lg list-none",
@@ -42,6 +54,7 @@ function Dropdown({ trigger, children, className }: IDropDownProps) {
 export function DropdownItem({
   children,
   disabled,
+  className,
   ...props
 }: IDropDownItemProps) {
   return (
@@ -54,7 +67,8 @@ export function DropdownItem({
           : [
               "text-gray-700 hover:bg-gray-200 cursor-pointer",
               "dark:(text-gray-200) dark:hover:(text-white bg-gray-600)",
-            ]
+            ],
+        className
       )}
       onClick={!disabled ? props.onClick : undefined}
       {...props}
