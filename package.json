@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "clsx": "^1.2.1",
+    "framer-motion": "6",
     "immer": "^9.0.15",
     "nanoid": "^4.0.0",
     "react": "^17.0.2",

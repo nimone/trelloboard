@@ -7,6 +7,7 @@ import TrelloForm, { TrelloInput, TrelloTaskForm } from "./TrelloForm"
 import Modal from "./Modal"
 import clsx from "clsx"
 import useTrelloStore, { ListItem } from "../store"
+import { motion } from "framer-motion"
 
 interface IProps {
   list: ListItem
@@ -32,13 +33,16 @@ function TaskList({ list, children, numTasks }: IProps) {
   }
   const handleDelete = () => {
     if (showModal || numTasks <= 1) deleteList(currentProject, list.id)
-    setShowModal(true)
+    else setShowModal(true)
   }
 
   const titleClassName = "font-bold text-gray-700 dark:text-gray-400"
 
   return (
-    <div
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.1 } }}
       className={clsx(
         "flex flex-col",
         "min-w-60 max-w-72",
@@ -87,7 +91,7 @@ function TaskList({ list, children, numTasks }: IProps) {
           <Modal
             danger
             title="Are you sure?"
-            body={`Delete "${name}" with ${numTasks} cards`}
+            body={`Delete "${list.name}" with ${numTasks} cards`}
           >
             <Button onClick={handleDelete} className="!bg-red-500">
               <Trash className="mr-2 w-5 h-5" />
@@ -141,7 +145,7 @@ function TaskList({ list, children, numTasks }: IProps) {
           <span>Add {numTasks !== 0 ? "another" : "a"} card</span>
         </Button>
       )}
-    </div>
+    </motion.div>
   )
 }
 

@@ -1,4 +1,5 @@
 import clsx from "clsx"
+import { AnimatePresence, motion } from "framer-motion"
 import React, { useEffect, useState } from "react"
 import useClickOutside from "../hooks/useClickOutside"
 
@@ -14,6 +15,20 @@ interface IDropDownItemProps extends React.LiHTMLAttributes<HTMLLIElement> {
   children: React.ReactNode
   disabled?: boolean
   className?: string
+}
+
+const variants = {
+  hidden: {
+    height: 0,
+    width: 0,
+    y: -5,
+    padding: 0,
+  },
+  visible: {
+    height: "auto",
+    width: "auto",
+    y: 0,
+  },
 }
 
 function Dropdown({
@@ -33,20 +48,29 @@ function Dropdown({
   return (
     <div ref={dropdownRef}>
       {trigger(() => setShow((prev) => !prev))}
-      <div
-        className={clsx(
-          "absolute top-0 min-w-44 z-10 py-0.5",
-          "bg-gray-100/80 text-base",
-          "backdrop-filter backdrop-blur",
-          "rounded shadow-lg list-none",
-          "dark:bg-gray-800/80",
-          !show && "hidden",
-          className
+      <AnimatePresence>
+        {show && (
+          <motion.div
+            variants={variants}
+            initial="hidden"
+            animate="visible"
+            exit="hidden"
+            className={clsx(
+              "absolute top-0 min-w-44 z-10 py-0.5",
+              "bg-gray-100/80 text-base",
+              "backdrop-filter backdrop-blur",
+              "rounded shadow-lg list-none",
+              "dark:bg-gray-800/80",
+              // !show && "hidden",
+              "overflow-hidden",
+              className
+            )}
+            onClick={() => setShow(false)}
+          >
+            <ul className="py-1 space-y-0.5">{children}</ul>
+          </motion.div>
         )}
-        onClick={() => setShow(false)}
-      >
-        <ul className="py-1 space-y-0.5">{children}</ul>
-      </div>
+      </AnimatePresence>
     </div>
   )
 }

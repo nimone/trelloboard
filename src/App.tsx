@@ -10,6 +10,7 @@ import { TrelloListForm } from "./components/TrelloForm"
 import Footer from "./components/Footer"
 import clsx from "clsx"
 import useTrelloStore from "./store"
+import { AnimatePresence } from "framer-motion"
 
 function App() {
   const [showAddListForm, setShowAddListForm] = useState(false)
@@ -49,23 +50,25 @@ function App() {
       <Header title="Trello Board" />
       <DragDropContext onDragEnd={handleTaskDrag}>
         <Board>
-          {lists.map((list) => (
-            <TaskList
-              key={list.id}
-              list={list}
-              numTasks={tasks[list.id].length}
-            >
-              {tasks[list.id].map((task, idx) => (
-                <Task
-                  key={task.id}
-                  task={task}
-                  listId={list.id}
-                  idx={idx}
-                  className="mb-1.5"
-                />
-              ))}
-            </TaskList>
-          ))}
+          <AnimatePresence exitBeforeEnter>
+            {lists.map((list) => (
+              <TaskList
+                key={list.id}
+                list={list}
+                numTasks={tasks[list.id].length}
+              >
+                {tasks[list.id].map((task, idx) => (
+                  <Task
+                    key={task.id}
+                    task={task}
+                    listId={list.id}
+                    idx={idx}
+                    className="mb-1.5"
+                  />
+                ))}
+              </TaskList>
+            ))}
+          </AnimatePresence>
           {showAddListForm ? (
             <TrelloListForm
               onSubmit={() => setShowAddListForm(false)}
